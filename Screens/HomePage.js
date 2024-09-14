@@ -6,20 +6,26 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import React, { useState, useCallback, useContext, useEffect } from "react";
+import AuthGlobal from "../Context/store/AuthGlobal";
+
 const HomePage = () => {
   const navigation = useNavigation();
+  const context = useContext(AuthGlobal);
+  const isAuthenticated = context.stateUser.isAuthenticated;
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Text style={styles.name}>Welcome to Aquatic Dragon!</Text>
+            <Text style={styles.name}>Hydration Starts Here!</Text>
           </View>
           <Image
-            source={require("../assets/logo2.0.png")}
+            source={require("../assets/logo2.1.png")}
             style={{
               width: 100,
               height: 100,
@@ -28,22 +34,22 @@ const HomePage = () => {
           />
           <View style={styles.cardContent}>
             <Text style={styles.description}>
-              With the Aquatic Dragon application, ordering water is now easier
-              than ever. This application provides a seamless experience,
-              allowing you to place an order from the comfort of your home or
-              office.
+              Water refilling stations provide a convenient and eco-friendly
+              solution for replenishing drinking water supplies. These stations
+              typically offer purified water, allowing customers to refill their
+              reusable containers, reducing single-use plastic waste. They are
+              promoting hydration while minimizing environmental impact.
             </Text>
           </View>
         </View>
-
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Text style={styles.name}>About Us</Text>
+            <Text style={styles.name}>Why Choose Us?</Text>
           </View>
-          <Text style={styles.nameafter}>Refill.Rehydrate.Repeat.</Text>
+          <Text style={styles.nameafter}>Hassle Free</Text>
           <View style={styles.cardContent}>
             <View style={styles.iconRow}>
-              <Image
+              {/* <Image
                 source={require("../assets/onboarding_2.png")}
                 style={{
                   width: 100,
@@ -52,25 +58,39 @@ const HomePage = () => {
                   borderRadius: 100,
                   backgroundColor: "#4a94d9",
                 }}
-              />
+              /> */}
 
               <Text
-                style={[styles.description, { width: "65%", paddingLeft: 15 }]}>
-                Aquatic Dragon Water Refilling Station is your go-to location
-                for clean, pure, and sustainable refreshment. At Aquatic Dragon
-                Water Refilling Station, we believe that access to safe and
-                refreshing drinking water should be convenient, environmentally
-                responsible, and affordable for everyone.
+                style={[styles.description, { width: "95%", paddingLeft: 15 }]}>
+                Our app provides a user-friendly and hassle-free ordering
+                experience. When customers use our app, they can easily place
+                orders and stay informed with real-time notifications regarding
+                the status of their orders. This streamlined process ensures
+                that customers can navigate through the ordering process
+                effortlessly and stay updated on their order progress without
+                any inconvenience.
+              </Text>
+            </View>
+          </View>
+
+          <Text style={styles.nameafter}>Quality and Reliability</Text>
+          <View style={styles.cardContent}>
+            <View style={styles.iconRow}>
+              <Text
+                style={[styles.description, { width: "95%", paddingLeft: 15 }]}>
+                We ensure that our water meets high standards for safety and
+                cleanliness, providing a reliable source of hydration.
               </Text>
             </View>
           </View>
         </View>
-
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Text style={styles.name}>Contact Us</Text>
+            <Text style={styles.name}>
+              We're your go-to source for water delivery service near you!
+            </Text>
           </View>
-          <View style={styles.cardContent}>
+          {/* <View style={styles.cardContent}>
             <View style={styles.iconRow}>
               <Ionicons name="call" size={25} color="black" />
               <Text style={styles.description}> 0908-866-1978</Text>
@@ -82,22 +102,25 @@ const HomePage = () => {
                 Bicutan, Taguig City
               </Text>
             </View>
+          </View> */}
+        </View>
+        {!isAuthenticated && (
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => navigation.navigate("User", { screen: "Login" })}>
+              <Text style={styles.login}>Login</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.registerButton}
+              onPress={() =>
+                navigation.navigate("User", { screen: "Register" })
+              }>
+              <Text style={styles.login}>Register</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-
-        <View style={styles.buttonGroup}>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={() => navigation.navigate("User", { screen: "Login" })}>
-            <Text style={styles.login}>Login</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.registerButton}
-            onPress={() => navigation.navigate("User", { screen: "Register" })}>
-            <Text style={styles.login}>Register</Text>
-          </TouchableOpacity>
-        </View>
+        )}
       </View>
     </ScrollView>
   );
